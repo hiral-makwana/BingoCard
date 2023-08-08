@@ -1,0 +1,20 @@
+{
+	"BINGO_CARD_CREATED_SUCCESS": "Your bingo card created successfully",
+	"BINGO_CARD_UPDATED_SUCCESS": "Your bingo card updated successfully",
+	"CARD_NOT_CREATED": "Your card is not created",
+	"CARD_NOT_UPDATED": "Your card is not updated",
+	"BINGO_CARD_FOUND": "Your bingo card is found",
+	"BINGO_CARD_NOT_FOUND": "The card is not found",
+	"BINGO_CARD_DELETE_SUCCESSFULLY": "Your bingo card is deleted successfully",
+	"NO_CARD_FOUND_FOR_SEARCH": "No card found with your search",
+	"SOMETHING_WENT_WRONG": "Something went wrong, please try again",
+	"SUCCESSFULLUY_SUBSCIBED": "You are subscribed successfully with your selected plan!",
+	"NOT_SUBSCRIBE": "You are not subscribed, please try again!",
+	"SUBSCRIPTION_UPDATE_SUCCESFULLY": "Your subscription updated successfully!",
+	"SUBSCRIPTION_NOT_UPDATE": "Your subscription is not updated, please try again!",
+	"SUBSCRIPTION_NOT_FOUND": "Subscription not found",
+	"SUBSCRIPTION_NOT_CANCEL": "Your subscription is not canceled, please try again!",
+	"SUBSCRIPTION_CANCEL_SUCCESS": "Your subscription canceled successfully!",
+	"ERROR_TOKEN_REQUIRED": "token required.",
+	"ERROR_INVALID_TOKEN": "invalid token"
+}

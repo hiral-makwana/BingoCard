@@ -1,0 +1,689 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Bingo Card REST APIs",
+    "description": "",
+    "license": {
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:8700",
+  "basePath": "/",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "bearerAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization"
+    }
+  },
+  "security": {
+    "bearerAuth": []
+  },
+  "paths": {
+    "/v1/private/cards/create": {
+      "post": {
+        "tags": [
+          "Card"
+        ],
+        "summary": "create card.",
+        "description": "This API create card",
+        "produces": [
+          "application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "card_image",
+            "type": "file",
+            "required": false,
+            "description": "The file to upload"
+          },
+          {
+            "name": "requestBody",
+            "in": "body",
+            "description": "Request body content",
+            "schema": {
+              "type": "object",
+              "properties": { 
+                "card_logo": {
+                  "type": "string",
+                  "example": "text"
+                },
+                "cart_title": {
+                  "type": "string",
+                  "example": "no"
+                },
+                "card_type": {
+                  "type": "string",
+                  "example": "text"
+                },
+                "card_grid": {
+                  "type": "integer",
+                  "format": "int32",
+                  "example": 2
+                },
+                "card_settings": {
+                  "type": "string",
+                  "example": "text"
+                },
+                "card_items": {
+                  "type": "string",
+                  "example": "text"
+                },
+                "card_style": {
+                  "type": "string",
+                  "example": "text"
+                }
+              },
+              "required": [
+                "card_logo",
+                "cart_title",
+                "card_type",
+                "card_grid",
+                "card_settings",
+                "card_items",
+                "card_style"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response with a message.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Card created successfully!"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Something went wrong, please try again."
+          },
+          "401": {
+            "description": "Your card is not created."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/private/cards/create/{id}": {
+      "post": {
+        "tags": [
+          "Card"
+        ],
+        "summary": "update card.",
+        "description": "This API Update card",
+        "produces": [
+          "application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the card to be Update.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "card_image",
+            "type": "file",
+            "required": false,
+            "description": "The file to upload"
+          },
+          {
+            "name": "requestBody",
+            "in": "body",
+            "description": "Request body content",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "card_logo": {
+                  "type": "string",
+                  "example": "text"
+                },
+                "cart_title": {
+                  "type": "string",
+                  "example": "no"
+                },
+                "card_type": {
+                  "type": "string",
+                  "example": "text"
+                },
+                "card_grid": {
+                  "type": "integer",
+                  "format": "int32",
+                  "example": 2
+                },
+                "card_settings": {
+                  "type": "string",
+                  "example": "text"
+                },
+                "card_items": {
+                  "type": "string",
+                  "example": "text"
+                },
+                "card_style": {
+                  "type": "string",
+                  "example": "text"
+                }
+              },
+              "required": [
+                "card_logo",
+                "cart_title",
+                "card_type",
+                "card_grid",
+                "card_settings",
+                "card_items",
+                "card_style"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response with a message.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Card created successfully!"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Something went wrong, please try again."
+          },
+          "401": {
+            "description": "Your card is not updated."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/private/cards": {
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "summary": "get card detail.",
+        "description": "This API for get card with filter",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "card_title",
+            "in": "query",
+            "description": "filter with card title",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "card_type",
+            "in": "query",
+            "description": "Filter cards with card type.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "card_grid",
+            "in": "query",
+            "description": "Filter cards with card grid.",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "start date",
+            "in": "query",
+            "description": "Filter cards with start date",
+            "required": false,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "end date",
+            "in": "query",
+            "description": "Filter cards with end date",
+            "required": false,
+            "type": "string",
+            "format": "date"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Your bingo card created successfully!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Card created successfully!"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Something went wrong, please try again."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/private/cards/{id}": {
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "summary": "get card detail by id.",
+        "description": "This API for get card detail ",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the card",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Your bingo card detail",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Your bingo card is found"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Something went wrong, please try again."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "getCardById"
+      },
+      "delete": {
+        "tags": [
+          "Card"
+        ],
+        "summary": "delete card detail by id.",
+        "description": "This API for delete card detail ",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the card",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Your bingo card delete",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Your bingo card is deleted successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Something went wrong, please try again."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "deleteCardById"
+      }
+    },
+    "/v1/private/subscriptions/create": {
+      "post": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "summary": "create Subscription.",
+        "description": "This API for create Subscription",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "requestBody",
+            "in": "body",
+            "description": "Request body content",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "type": "integer"
+                },
+                "order_id": {
+                  "type": "string"
+                },
+                "stripe_plan_id": {
+                  "type": "string"
+                },
+                "purchase_type": {
+                  "type": "integer"
+                },
+                "plan_name": {
+                  "type": "string"
+                },
+                "subscription_status": {
+                  "type": "string"
+                },
+                "purchase_date": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "next_renewal": {
+                  "type": "string",
+                  "format": "date"
+                }
+              },
+              "required": [
+                "user_id",
+                "order_id",
+                "stripe_plan_id",
+                "purchase_type",
+                "plan_name",
+                "subscription_status",
+                "purchase_date",
+                "next_renewal"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response with a message.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "You are subscribed successfully with your selected plan!"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Something went wrong, please try again."
+          },
+          "401": {
+            "description": "You are not subscribed, please try again!"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/private/subscriptions/update/{id}": {
+      "post": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "summary": "Update Subscription.",
+        "description": "This API for Update Subscription",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the subscription to be Update.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "requestBody",
+            "in": "body",
+            "description": "Request body content",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "type": "integer"
+                },
+                "order_id": {
+                  "type": "string"
+                },
+                "stripe_plan_id": {
+                  "type": "string"
+                },
+                "purchase_type": {
+                  "type": "integer"
+                },
+                "plan_name": {
+                  "type": "string"
+                },
+                "subscription_status": {
+                  "type": "string"
+                },
+                "purchase_date": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "next_renewal": {
+                  "type": "string",
+                  "format": "date"
+                }
+              },
+              "required": [
+                "user_id",
+                "order_id",
+                "stripe_plan_id",
+                "purchase_type",
+                "plan_name",
+                "subscription_status",
+                "purchase_date",
+                "next_renewal"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response with a message.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Your subscription updated successfully!"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Something went wrong, please try again."
+          },
+          "401": {
+            "description": "Your subscription is not updated, please try again!"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/private/subscriptions/cancel/{id}": {
+      "post": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "summary": "cancel Subscription.",
+        "description": "This API for cancel Subscription",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the subscription to be cancel.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "The ID of the subscription to be cancel.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "stripe_plan_id",
+            "in": "path",
+            "description": "The ID of the subscription to be cancel.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response with a message.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Your subscription canceled successfully!"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Something went wrong, please try again."
+          },
+          "401": {
+            "description": "Your subscription is not canceled, please try again!"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "card": {
+      "properties": {
+        "card_title": {
+          "type": "string"
+        },
+        "card_logo": {
+          "type": "object",
+          "properties": "string"
+        },
+        "card_type": {
+          "type": "string"
+        },
+        "card_grid": {
+          "type": "integer"
+        },
+        "card_settings": {
+          "type": "object",
+          "properties": "string"
+        },
+        "card_items": {
+          "type": "object",
+          "properties": "string"
+        },
+        "card_style": {
+          "type": "object",
+          "properties": "string"
+        }
+      }
+    },
+    "Subscription": {
+      "properties":{
+      "user_id": {
+        "type": "integer"
+      },
+      "bingo_plan_id": {
+        "type": "integer"
+      },
+      "order_id": {
+        "type": "string"
+      },
+      "stripe_plan_id": {
+        "type": "string"
+      },
+      "plan_name": {
+        "type": "string"
+      },
+      "purchase_type": {
+        "type": "string"
+      },
+      "subscription_status": {
+        "type": "string"
+      },
+      "purchase_date": {
+        "type": "string",
+        "format":"date"
+      },
+      "next_renewal": {
+        "type": "string",
+        "format":"date"
+      }
+    }
+  }
+  }
+}

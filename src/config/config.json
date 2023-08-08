@@ -1,0 +1,25 @@
+{
+	"development": {
+		"use_env_variable": false,
+		"DB": {
+			"username": "root",
+			"password": "",
+			"database": "bingo_card",
+			"host": "localhost",
+			"dialect": "mysql",
+			"queueLimit": 0,
+			"connectionLimit": 0,
+			"logging": false,
+			"pool": {
+				"min": 10,
+				"max": 50
+			},
+			"dialectOptions": {
+				"decimalNumbers": true,
+				"maxPreparedStatements": 100
+			}
+		},
+		"PORT": 8700,
+		"JWT_SECRET":"hshw8e639hsNI!joiwM#ts37te8736"
+	}
+}
