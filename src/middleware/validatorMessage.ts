@@ -1,7 +1,6 @@
 import { isCelebrateError } from 'celebrate'
 import { Request, Response, NextFunction } from 'express'
 const HandleErrorMessage = async (err: any, req: Request, res: Response, next: NextFunction) => {
-
     try {
         if (isCelebrateError(err)) {
             let errorBody: any = {}

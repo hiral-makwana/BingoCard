@@ -2,20 +2,26 @@ import multer from 'multer';
 import fs from 'fs';
 import { Request } from 'express';
 
-const storage = (cardId: number) => multer.diskStorage({
-    destination: (_req: Request, _file: Express.Multer.File, cb: any) => {
-        const externalDrivePath = 'E:\\BingoCard_imgs'; // Double backslashes for Windows paths
-        const cardImagesPath = `${externalDrivePath}/card_images/${cardId}`;
+const storage = multer.diskStorage({
+    destination: (req: Request, file: any, cb: any) => {
+        const cardId = req.body.card_id;
+        // Replace this with the path to the external drive
+        //const externalDrivePath = global.config.ExternalFileUploadPath;
+        const userId = (req.user as any).user_id;
+
+        //full path for the card_images directory
+        const cardImagesPath = `./card_images/${userId}`;
 
         if (!fs.existsSync(cardImagesPath)) {
             fs.mkdirSync(cardImagesPath, { recursive: true });
         }
-
         cb(null, cardImagesPath);
     },
-    filename: (_req: Request, file: Express.Multer.File, cb: any) => {
+    filename: (req: Request, file: any, cb: any) => {
         cb(null, file.originalname);
     }
 });
 
-export const configureUpload = (cardId: number) => multer({ storage: storage(cardId) });
+const upload = multer({ storage: storage });
+
+export default upload;

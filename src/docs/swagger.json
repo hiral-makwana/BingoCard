@@ -15,7 +15,8 @@
     "https"
   ],
   "produces": [
-    "application/json"
+    "application/json",
+    "multipart/form-data"
   ],
   "securityDefinitions": {
     "bearerAuth": {
@@ -36,64 +37,116 @@
         "summary": "create card.",
         "description": "This API create card",
         "produces": [
-          "application/json",
+          "multipart/form-data"
+        ],
+        "consumes":[
           "multipart/form-data"
         ],
         "parameters": [
           {
             "in": "formData",
             "name": "card_image",
-            "type": "file",
+            "type": "array",
+            "items": {
+              "type": "file"
+            },
             "required": false,
-            "description": "The file to upload"
+            "collectionFormat": "multi",
+            "description": "The file(s) to upload"
           },
           {
-            "name": "requestBody",
-            "in": "body",
-            "description": "Request body content",
-            "schema": {
-              "type": "object",
-              "properties": { 
-                "card_logo": {
-                  "type": "string",
-                  "example": "text"
-                },
-                "cart_title": {
-                  "type": "string",
-                  "example": "no"
-                },
-                "card_type": {
-                  "type": "string",
-                  "example": "text"
-                },
-                "card_grid": {
-                  "type": "integer",
-                  "format": "int32",
-                  "example": 2
-                },
-                "card_settings": {
-                  "type": "string",
-                  "example": "text"
-                },
-                "card_items": {
-                  "type": "string",
-                  "example": "text"
-                },
-                "card_style": {
-                  "type": "string",
-                  "example": "text"
-                }
+            "in": "formData",
+            "name": "card_logo",
+            "type": "object",
+            "properties": {
+              "setting1": {
+                "type": "string",
+                "example": "value1"
               },
-              "required": [
-                "card_logo",
-                "cart_title",
-                "card_type",
-                "card_grid",
-                "card_settings",
-                "card_items",
-                "card_style"
-              ]
-            }
+              "setting2": {
+                "type": "integer",
+                "format": "int32",
+                "example": 42
+              }
+            },
+            "required": true,
+            "description": "Card logo settings"
+          },
+          {
+            "in": "formData",
+            "name": "card_title",
+            "type": "string",
+            "required": true,
+            "description": "Card title"
+          },
+          {
+            "in": "formData",
+            "name": "card_type",
+            "type": "string",
+            "enum": ["text", "images", "emojis", "numbers", "combo"],
+            "required": true,
+            "description": "Card type"
+          },
+          {
+            "in": "formData",
+            "name": "card_grid",
+            "type": "integer",
+            "format": "int32",
+            "required": true,
+            "description": "Card grid value"
+          },
+          {
+            "in": "formData",
+            "name": "card_settings",
+            "type": "object",
+            "properties": {
+              "setting1": {
+                "type": "string",
+                "example": "value1"
+              },
+              "setting2": {
+                "type": "integer",
+                "format": "int32",
+                "example": 42
+              }
+            },
+            "required": true,
+            "description": "Card settings"
+          },
+          {
+            "in": "formData",
+            "name": "card_items",
+            "type": "object",
+            "properties": {
+              "item1": {
+                "type": "string",
+                "example": "item1-value"
+              },
+              "item2": {
+                "type": "integer",
+                "format": "int32",
+                "example": 99
+              }
+            },
+            "required": true,
+            "description": "Card items"
+          },
+          {
+            "in": "formData",
+            "name": "card_style",
+            "type": "object",
+            "properties": {
+              "style1": {
+                "type": "string",
+                "example": "style-value"
+              },
+              "style2": {
+                "type": "boolean",
+                "example": true
+              }
+            },
+            "required": true,
+            "description": "Card style"
           }
         ],
         "responses": {
@@ -131,7 +184,9 @@
         "summary": "update card.",
         "description": "This API Update card",
         "produces": [
-          "application/json",
+          "multipart/form-data"
+        ],
+        "consumes":[
           "multipart/form-data"
         ],
         "parameters": [
@@ -145,58 +200,107 @@
           {
             "in": "formData",
             "name": "card_image",
-            "type": "file",
+            "type": "array",
+            "items": {
+              "type": "file"
+            },
             "required": false,
-            "description": "The file to upload"
+            "collectionFormat": "multi",
+            "description": "The file(s) to upload"
           },
           {
-            "name": "requestBody",
-            "in": "body",
-            "description": "Request body content",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "card_logo": {
-                  "type": "string",
-                  "example": "text"
-                },
-                "cart_title": {
-                  "type": "string",
-                  "example": "no"
-                },
-                "card_type": {
-                  "type": "string",
-                  "example": "text"
-                },
-                "card_grid": {
-                  "type": "integer",
-                  "format": "int32",
-                  "example": 2
-                },
-                "card_settings": {
-                  "type": "string",
-                  "example": "text"
-                },
-                "card_items": {
-                  "type": "string",
-                  "example": "text"
-                },
-                "card_style": {
-                  "type": "string",
-                  "example": "text"
-                }
+            "in": "formData",
+            "name": "card_logo",
+            "type": "object",
+            "properties": {
+              "setting1": {
+                "type": "string",
+                "example": "value1"
               },
-              "required": [
-                "card_logo",
-                "cart_title",
-                "card_type",
-                "card_grid",
-                "card_settings",
-                "card_items",
-                "card_style"
-              ]
-            }
-          }
+              "setting2": {
+                "type": "integer",
+                "format": "int32",
+                "example": 42
+              }
+            },
+            "required": true,
+            "description": "Card logo settings"
+          },
+          {
+            "in": "formData",
+            "name": "card_title",
+            "type": "string",
+            "required": true,
+            "description": "Card title"
+          },
+          {
+            "in": "formData",
+            "name": "card_type",
+            "type": "string",
+            "enum": ["text", "images", "emojis", "numbers", "combo"],
+            "required": true,
+            "description": "Card type"
+          },
+          {
+            "in": "formData",
+            "name": "card_grid",
+            "type": "integer",
+            "format": "int32",
+            "required": true,
+            "description": "Card grid value"
+          },
+          {
+            "in": "formData",
+            "name": "card_settings",
+            "type": "object",
+            "properties": {
+              "setting1": {
+                "type": "string",
+                "example": "value1"
+              },
+              "setting2": {
+                "type": "integer",
+                "format": "int32",
+                "example": 42
+              }
+            },
+            "required": true,
+            "description": "Card settings"
+          },
+          {
+            "in": "formData",
+            "name": "card_items",
+            "type": "object",
+            "properties": {
+              "item1": {
+                "type": "string",
+                "example": "item1-value"
+              },
+              "item2": {
+                "type": "integer",
+                "format": "int32",
+                "example": 99
+              }
+            },
+            "required": true,
+            "description": "Card items"
+          },
+          {
+            "in": "formData",
+            "name": "card_style",
+            "type": "object",
+            "properties": {
+              "style1": {
+                "type": "string",
+                "example": "style-value"
+              },
+              "style2": {
+                "type": "boolean",
+                "example": true
+              }
+            },
+            "required": true
+          }   
         ],
         "responses": {
           "200": {
@@ -206,7 +310,7 @@
               "properties": {
                 "message": {
                   "type": "string",
-                  "example": "Card created successfully!"
+                  "example": "Card update successfully!"
                 }
               }
             }
@@ -230,48 +334,39 @@
         "tags": [
           "Card"
         ],
-        "summary": "get card detail.",
+        "summary": "get card list - Filter.",
         "description": "This API for get card with filter",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "card_title",
-            "in": "query",
-            "description": "filter with card title",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "card_type",
-            "in": "query",
-            "description": "Filter cards with card type.",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "card_grid",
-            "in": "query",
-            "description": "Filter cards with card grid.",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "name": "start date",
-            "in": "query",
-            "description": "Filter cards with start date",
-            "required": false,
-            "type": "string",
-            "format": "date"
-          },
-          {
-            "name": "end date",
-            "in": "query",
-            "description": "Filter cards with end date",
-            "required": false,
-            "type": "string",
-            "format": "date"
+            "name": "filter",
+            "in": "body",
+            "description": "Filter criteria for cards",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "card_title": {
+                  "type": "string"
+                },
+                "card_type": {
+                  "type": "string"
+                },
+                "card_grid": {
+                  "type": "integer"
+                },
+                "start_date": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "end_date": {
+                  "type": "string",
+                  "format": "date"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -580,18 +675,24 @@
             "type": "string"
           },
           {
-            "name": "user_id",
-            "in": "path",
-            "description": "The ID of the subscription to be cancel.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "stripe_plan_id",
-            "in": "path",
-            "description": "The ID of the subscription to be cancel.",
-            "required": true,
-            "type": "string"
+            "name": "requestBody",
+            "in": "body",
+            "description": "Request body content",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "type": "integer"
+                },
+                "stripe_plan_id": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "user_id",
+                "stripe_plan_id"
+              ]
+            }
           }
         ],
         "responses": {

@@ -4,7 +4,7 @@
 		"DB": {
 			"username": "root",
 			"password": "",
-			"database": "bingo_card",
+			"database": "wplocal",
 			"host": "localhost",
 			"dialect": "mysql",
 			"queueLimit": 0,
@@ -20,6 +20,7 @@
 			}
 		},
 		"PORT": 8700,
-		"JWT_SECRET":"hshw8e639hsNI!joiwM#ts37te8736"
+		"JWT_SECRET":"hshw8e639hsNI!joiwM#ts37te8736",
+		"ExternalFileUploadPath": "E:/BingoCard_imgs"
 	}
 }

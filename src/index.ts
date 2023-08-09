@@ -40,6 +40,7 @@ app.use(
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(i18n.init);
 
 /** Use routers */

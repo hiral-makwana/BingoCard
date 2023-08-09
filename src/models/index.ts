@@ -20,7 +20,6 @@ sequelize.authenticate().then(() => {
 
 }).catch((err: any) => {
     console.log("Db Error", err.message)
-    // emailHelper.sendErrorEmail(err)
 });
 fs
     .readdirSync(__dirname)

@@ -9,8 +9,9 @@ const createSubscription: any = async (req: Request, res: Response) => {
         const createSubscription = await subscription.create(body)
         if (createSubscription) {
             return res.status(200).send({ message: res.__('SUCCESSFULLUY_SUBSCIBED') });
+        } else {
+            return res.status(401).send({ status: 401, message: res.__('NOT_SUBSCRIBE') });
         }
-        return res.status(401).send({ status: 401, message: res.__('NOT_SUBSCRIBE') });
     } catch (e) {
         console.log(e);
         return res.status(400).send({ status: 400, message: res.__('SOMETHING_WENT_WRONG') });
@@ -39,19 +40,21 @@ const updateSubscription: any = async (req: Request, res: Response) => {
 const cancelSubscription: any = async (req: Request, res: Response) => {
     try {
         const subscription_id = req.params.id
+        const { user_id, order_id } = req.body
         const findSubscription = await subscription.findOne({ where: { us_id: subscription_id } })
         if (!findSubscription) {
             return res.status(404).send({ status: 404, message: res.__('SUBSCRIPTION_NOT_FOUND') });
         }
-        const cancelSubscription = await subscription.destroy({ where: { us_id: subscription_id } })
+        const cancelSubscription = await subscription.destroy({ where: { us_id: subscription_id, user_id: user_id, order_id: order_id } })
         if (!cancelSubscription) {
             return res.status(401).send({ status: 401, message: res.__('SUBSCRIPTION_NOT_CANCEL') });
+        } else {
+            return res.status(200).send({ message: res.__('SUBSCRIPTION_CANCEL_SUCCESS') });;
         }
-        return res.status(200).send({ message: res.__('SUBSCRIPTION_CANCEL_SUCCESS') });;
     } catch (e) {
         console.log(e);
         return res.status(400).send({ status: 400, message: res.__('SOMETHING_WENT_WRONG') });
     }
 }
 
-export = { createSubscription, updateSubscription, cancelSubscription }
+export = { createSubscription, updateSubscription, cancelSubscription } 
