@@ -16,5 +16,8 @@
 	"SUBSCRIPTION_NOT_CANCEL": "Your subscription is not canceled, please try again!",
 	"SUBSCRIPTION_CANCEL_SUCCESS": "Your subscription canceled successfully!",
 	"ERROR_TOKEN_REQUIRED": "token required.",
-	"ERROR_INVALID_TOKEN": "invalid token"
+	"ERROR_INVALID_TOKEN": "invalid token",
+	"CARD_ID_REQUIRED": "card_id is required in the request query!",
+	"FILEUPLOAD_FAILED": "File upload failed!",
+	"FILEUPLOAD_SUCCESS": "Files uploaded successfully!"
 }

@@ -3,21 +3,25 @@ import fs from 'fs';
 import { Request } from 'express';
 
 const storage = multer.diskStorage({
-    destination: (req: Request, file: any, cb: any) => {
-        const cardId = req.body.card_id;
-        // Replace this with the path to the external drive
-        //const externalDrivePath = global.config.ExternalFileUploadPath;
-        const userId = (req.user as any).user_id;
+    destination: (req: Request, file: Express.Multer.File, cb: (error: Error | null, destination: string) => void) => {
+        const externalDrivePath = global.config.ExternalFileUploadPath;
+        const cardId = req.query.card_id;
+        if (!cardId) {
+            return cb(new Error('card_id is required in the request body'), '');
+        }
 
-        //full path for the card_images directory
-        const cardImagesPath = `./card_images/${userId}`;
+        const cardImagesPath = `${externalDrivePath}/card_images/${cardId}`;
 
         if (!fs.existsSync(cardImagesPath)) {
-            fs.mkdirSync(cardImagesPath, { recursive: true });
+            try {
+                fs.mkdirSync(cardImagesPath, { recursive: true });
+            } catch (error) {
+                return cb(error as Error, '');
+            }
         }
         cb(null, cardImagesPath);
     },
-    filename: (req: Request, file: any, cb: any) => {
+    filename: (req: Request, file: Express.Multer.File, cb: (error: Error | null, filename: string) => void) => {
         cb(null, file.originalname);
     }
 });

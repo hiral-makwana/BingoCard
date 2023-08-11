@@ -3,28 +3,24 @@ import { Model, Sequelize, DataTypes, Association, ENUM, TextDataType } from "se
 import { sequelize } from "./index";
 import subscriptionAttributes from "../models/interface/subscription.interface"
 
-
-
 export enum subscription_status {
     ACTIVE = 'active',
     TRIAL = 'trial',
     CANCELLED = 'Cancelled',
 }
-
 export class subscription extends Model<subscriptionAttributes>
     implements subscriptionAttributes {
-        us_id!: number
-        user_id! : number 
-        bingo_plan_id! : number
-        order_id! : string
-        stripe_plan_id! : string
-        plan_name! : string
-        purchase_type!: string
-        subscription_status! : Boolean
-        purchase_date! :Date
-        next_renewal!:Date
+    us_id!: number
+    user_id!: number
+    bingo_plan_id!: number
+    order_id!: string
+    stripe_plan_id!: string
+    plan_name!: string
+    purchase_type!: string
+    subscription_status!: Boolean
+    purchase_date!: Date
+    next_renewal!: Date
 }
-
 
 subscription.init({
     us_id: {
@@ -35,7 +31,7 @@ subscription.init({
     user_id: {
         type: DataTypes.BIGINT
     },
-    bingo_plan_id : {
+    bingo_plan_id: {
         type: DataTypes.SMALLINT
     },
     order_id: {
