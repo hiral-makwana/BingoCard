@@ -18,13 +18,11 @@ const createSubscription: any = async (req: Request, res: Response) => {
                 return res.status(200).send({ message: res.__('RENEWAL_DATE_NOT_PAST') });
             }
         }
-        else {
-            const createSubscription = await subscription.create(body)
-            if (createSubscription) {
-                return res.status(200).send({ message: res.__('SUCCESSFULLUY_SUBSCIBED') });
-            } else {
-                return res.status(401).send({ status: 401, message: res.__('NOT_SUBSCRIBE') });
-            }
+        const createSubscription = await subscription.create(body)
+        if (createSubscription) {
+            return res.status(200).send({ message: res.__('SUCCESSFULLUY_SUBSCIBED') });
+        } else {
+            return res.status(401).send({ status: 401, message: res.__('NOT_SUBSCRIBE') });
         }
     } catch (e) {
         console.log(e);
@@ -42,10 +40,10 @@ const updateSubscription: any = async (req: Request, res: Response) => {
         }
         else {
             if (subscription_status == 'active') {
-                const findPlan: any = await subscription.findOne({ where: { user_id: body.user_id, subscription_status: 'active' }, order: [['createdAt', 'DESC']] })
-                if(findPlan != null){
+                const findPlan: any = await subscription.findOne({ where: { user_id: body.user_id, subscription_status: 'active', order_id: body.order_id }, order: [['createdAt', 'DESC']] })
+                if (findPlan != null) {
                     return res.status(200).send({ message: res.__('SUBSCRIPTION_ALREADY') });
-                }                
+                }
             }
             if (moment(body.purchase_date).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')) {
                 return res.status(200).send({ message: res.__('SUBSCRIPTION_DATE_NOT_PAST') });
