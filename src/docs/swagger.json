@@ -45,17 +45,6 @@
         "parameters": [
           {
             "in": "formData",
-            "name": "card_image",
-            "type": "array",
-            "items": {
-              "type": "file"
-            },
-            "required": false,
-            "collectionFormat": "multi",
-            "description": "The file(s) to upload"
-          },
-          {
-            "in": "formData",
             "name": "card_logo",
             "type": "file",
             "description": "Card logo settings"
@@ -210,17 +199,6 @@
             "description": "The ID of the card to be Update.",
             "required": true,
             "type": "string"
-          },
-          {
-            "in": "formData",
-            "name": "card_image",
-            "type": "array",
-            "items": {
-              "type": "file"
-            },
-            "required": false,
-            "collectionFormat": "multi",
-            "description": "The file(s) to upload"
           },
           {
             "in": "formData",
@@ -507,6 +485,66 @@
         "operationId": "deleteCardById"
       }
     },
+    "/v1/private/cards/fileUpload": {
+      "post": {
+        "tags": [
+          "Card"
+        ],
+        "summary": "Upload File(s).",
+        "description": "Upload image api",
+        "produces": [
+          "multipart/form-data"
+        ],
+        "consumes":[
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "card_id",
+            "in": "query",
+            "description": "The ID of the card to upload files",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "card_image",
+            "type": "array",
+            "items": {
+              "type": "file"
+            },
+            "required": false,
+            "collectionFormat": "multi",
+            "description": "The file(s) to upload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response with a message.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Files uploaded successfully!"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Something went wrong, please try again."
+          },
+          "401": {
+            "description": "File upload failed!"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/v1/private/subscriptions/create": {
       "post": {
         "tags": [
@@ -527,6 +565,9 @@
               "properties": {
                 "user_id": {
                   "type": "integer"
+                },
+                "subscribe_id":{
+                  "type" : "integer"
                 },
                 "order_id": {
                   "type": "string"
@@ -554,6 +595,7 @@
               },
               "required": [
                 "user_id",
+                "subscribe_id",
                 "order_id",
                 "stripe_plan_id",
                 "purchase_type",
@@ -620,6 +662,9 @@
                 "user_id": {
                   "type": "integer"
                 },
+                "subscribe_id":{
+                  "type" : "integer"
+                },
                 "order_id": {
                   "type": "string"
                 },
@@ -646,6 +691,7 @@
               },
               "required": [
                 "user_id",
+                "subscribe_id",
                 "order_id",
                 "stripe_plan_id",
                 "purchase_type",
@@ -712,13 +758,17 @@
                 "user_id": {
                   "type": "integer"
                 },
-                "stripe_plan_id": {
+                "subscribe_id":{
+                  "type" : "integer"
+                },
+                "order_id": {
                   "type": "string"
                 }
               },
               "required": [
                 "user_id",
-                "stripe_plan_id"
+                "stripe_plan_id",
+                "subscribe_id"
               ]
             }
           }
@@ -741,6 +791,73 @@
           },
           "401": {
             "description": "Your subscription is not canceled, please try again!"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/private/subscriptions": {
+      "get": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "summary": "get subscription detail.",
+        "description": "This API for get subscription with filter",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "body",
+            "description": "Filter criteria for subscription",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "type": "integer"
+                },
+                "stripe_plan_id": {
+                  "type": "string"
+                },
+                "purchase_type": {
+                  "type": "string"
+                },
+                "subscription_status":{
+                  "type":"string"
+                },
+                "start_date": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "end_date": {
+                  "type": "string",
+                  "format": "date"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Your subscription fetched successfully!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Your subscription fetched successfully!"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Something went wrong, please try again."
           }
         },
         "security": [

@@ -7,7 +7,6 @@ const createSubscription: any = async (req: Request, res: Response) => {
     try {
         let body: any = req.body
         const finduser: any = await subscription.findOne({ where: { user_id: body.user_id }, order: [['createdAt', 'DESC']] })
-        console.log(finduser)
         if (finduser != null) {
             if (finduser.subscription_status == subscription_status.ACTIVE) {
                 return res.status(200).send({ message: res.__('SUBSCRIPTION_ALREADY') });

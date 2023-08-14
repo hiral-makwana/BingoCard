@@ -189,7 +189,7 @@ const deleteCard: any = async (req: Request, res: Response) => {
     try {
         const card_id = req.params.id;
         const externalDrivePath = global.config.ExternalFileUploadPath;
-        
+
         const cardDetail = await card.destroy({ where: { card_id: card_id } })
         if (!cardDetail) {
             return res.status(404).send({ status: 404, message: res.__('BINGO_CARD_NOT_FOUND') });
@@ -204,24 +204,29 @@ const deleteCard: any = async (req: Request, res: Response) => {
         return res.status(400).send({ status: 400, message: res.__('SOMETHING_WENT_WRONG') });
     }
 }
-const uploadFile: any = (req: Request, res: Response) => {
-    const cardId = req.query.card_id;
+const uploadFile: any = async (req: Request, res: Response) => {
+    const cardId : any = req.query.card_id;
     if (!cardId) {
         return res.status(400).json({ status: 404, message: res.__('CARD_ID_REQUIRED') });
     }
-    upload.array('card_image')(req, res, (error: any) => {
-        const files = req.files;
-        if (!files) {
-            return res.status(400).json({ status: 404, message: res.__('FILE_REQUIRED') });
-        }
-        if (error) {
-            console.log(error)
-            return res.status(500).json({ status: 500, message: res.__('FILEUPLOAD_FAILED') });
-        }
-        else {
-            return res.status(500).json({ status: 200, message: res.__('FILEUPLOAD_SUCCESS') });
-        }
-    });
+    const cardDetail = await card.findOne({ where: { card_id: cardId } })
+    if (!cardDetail) {
+        return res.status(404).send({ status: 404, message: res.__('BINGO_CARD_NOT_FOUND') });
+    } else {
+        upload.array('card_image')(req, res, (error: any) => {
+            const files = req.files;
+            if (!files) {
+                return res.status(400).json({ status: 404, message: res.__('FILE_REQUIRED') });
+            }
+            if (error) {
+                console.log(error)
+                return res.status(500).json({ status: 500, message: res.__('FILEUPLOAD_FAILED') });
+            }
+            else {
+                return res.status(500).json({ status: 200, message: res.__('FILEUPLOAD_SUCCESS') });
+            }
+        });
+    }
 }
 
 export = { upsertCard, getCardDetail, getCardDetailById, deleteCard, uploadFile } 
