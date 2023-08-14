@@ -12,12 +12,19 @@
 	"NOT_SUBSCRIBE": "You are not subscribed, please try again!",
 	"SUBSCRIPTION_UPDATE_SUCCESFULLY": "Your subscription updated successfully!",
 	"SUBSCRIPTION_NOT_UPDATE": "Your subscription is not updated, please try again!",
-	"SUBSCRIPTION_NOT_FOUND": "Subscription not found",
+	"SUBSCRIPTION_NOT_FOUND": "No subscription found!",
+	"SUBSCRIPTION_FOUND" : "Your subscription fetched successfully!",
 	"SUBSCRIPTION_NOT_CANCEL": "Your subscription is not canceled, please try again!",
+	"SUBSCRIPTION_DATE_NOT_PAST":"Subscription date must not be set to a past date!",
+	"RENEWAL_DATE_NOT_PAST":"The renewal date must be greater than the purchase date!",
 	"SUBSCRIPTION_CANCEL_SUCCESS": "Your subscription canceled successfully!",
+	"SUBSCRIPTION_ALREADY":"You are already subscribed to the plan!",
+	"SUBSCRIPTION_ALREADY_CANCELLED":"Your plan is already cancelled!",
 	"ERROR_TOKEN_REQUIRED": "token required.",
 	"ERROR_INVALID_TOKEN": "invalid token",
 	"CARD_ID_REQUIRED": "card_id is required in the request query!",
 	"FILEUPLOAD_FAILED": "File upload failed!",
-	"FILEUPLOAD_SUCCESS": "Files uploaded successfully!"
+	"FILEUPLOAD_SUCCESS": "Files uploaded successfully!",
+	"FILE_REQUIRED": "Please select a file(s)!",
+	"END_DATE_SHOULD_BE_GREATER": "End date should be graeter then Start date!"
 }

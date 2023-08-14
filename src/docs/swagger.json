@@ -57,20 +57,34 @@
           {
             "in": "formData",
             "name": "card_logo",
-            "type": "object",
-            "properties": {
-              "setting1": {
-                "type": "string",
-                "example": "value1"
-              },
-              "setting2": {
-                "type": "integer",
-                "format": "int32",
-                "example": 42
-              }
-            },
-            "required": true,
+            "type": "file",
             "description": "Card logo settings"
+          },
+          {
+            "in": "formData",
+            "name": "header_bg",
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "grid_bg",
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "card_bg",
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "free_space_img",
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "deleted_images",
+            "type": "array",
+            "description": "array of deleted file name"
           },
           {
             "in": "formData",
@@ -211,20 +225,34 @@
           {
             "in": "formData",
             "name": "card_logo",
-            "type": "object",
-            "properties": {
-              "setting1": {
-                "type": "string",
-                "example": "value1"
-              },
-              "setting2": {
-                "type": "integer",
-                "format": "int32",
-                "example": 42
-              }
-            },
-            "required": true,
+            "type": "file",
             "description": "Card logo settings"
+          },
+          {
+            "in": "formData",
+            "name": "header_bg",
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "grid_bg",
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "card_bg",
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "free_space_img",
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "deleted_images",
+            "type": "array",
+            "description": "array of deleted file name"
           },
           {
             "in": "formData",

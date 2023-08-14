@@ -10,16 +10,17 @@ export enum subscription_status {
 }
 export class subscription extends Model<subscriptionAttributes>
     implements subscriptionAttributes {
-    us_id!: number
-    user_id!: number
-    bingo_plan_id!: number
-    order_id!: string
-    stripe_plan_id!: string
-    plan_name!: string
-    purchase_type!: string
-    subscription_status!: Boolean
-    purchase_date!: Date
-    next_renewal!: Date
+        us_id!: number
+        user_id! : number 
+        subscribe_id! : number
+        bingo_plan_id! : number
+        order_id! : string
+        stripe_plan_id! : string
+        plan_name! : string
+        purchase_type!: string
+        subscription_status! : string
+        purchase_date! :Date
+        next_renewal!:Date
 }
 
 subscription.init({
@@ -31,7 +32,10 @@ subscription.init({
     user_id: {
         type: DataTypes.BIGINT
     },
-    bingo_plan_id: {
+    subscribe_id :{
+        type : DataTypes.INTEGER
+    },
+    bingo_plan_id : {
         type: DataTypes.SMALLINT
     },
     order_id: {

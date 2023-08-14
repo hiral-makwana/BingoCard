@@ -26,7 +26,7 @@ const upsertCard: any = async (req: Request, res: Response) => {
                 cb(null, Date.now() + '-' + file.originalname); // File naming
             },
         });
-        const uploadMultiple = multer({ storage: storage }).fields([{ name: 'card_logo' }, { name: 'card_style_images' }]);
+        const uploadMultiple = multer({ storage: storage }).fields([{ name: 'card_logo' }, { name: 'header_bg' }, { name: 'grid_bg' }, { name: 'card_bg' }, { name: 'free_space_img' }]);
 
         uploadMultiple(req, res, async (err: any) => {
             if (err) {
@@ -136,6 +136,9 @@ const getCardDetail: any = async (req: Request, res: Response) => {
         if (card_type && card_type !== undefined) {
             query.where.card_type = card_type
         }
+        if (moment(start_date).format('YYYY-MM-DD') > moment(end_date).format('YYYY-MM-DD')) {
+            return res.status(200).send({ message: res.__('END_DATE_SHOULD_BE_GREATER') });
+        }
         if (card_grid && card_grid !== undefined) {
             query.where.card_grid = card_grid
         }
@@ -153,7 +156,6 @@ const getCardDetail: any = async (req: Request, res: Response) => {
             return res.status(200).send({ status: 200, message: res.__('NO_CARD_FOUND_FOR_SEARCH') });
         } else {
             cardDetail.map((data: any) => {
-                data.card_logo = isJSONString(data.card_logo) ? JSON.parse(data.card_logo) : data.card_logo
                 data.card_settings = isJSONString(data.card_settings) ? JSON.parse(data.card_settings) : data.card_settings
                 data.card_style = isJSONString(data.card_style) ? JSON.parse(data.card_style) : data.card_style
                 data.card_items = isJSONString(data.card_items) ? JSON.parse(data.card_items) : data.card_items
@@ -173,10 +175,9 @@ const getCardDetailById: any = async (req: Request, res: Response) => {
         if (!cardDetail) {
             return res.status(404).send({ status: 404, message: res.__('BINGO_CARD_NOT_FOUND') });
         } else {
-            cardDetail.card_logo = JSON.parse(cardDetail.card_logo)
-            cardDetail.card_settings = JSON.parse(cardDetail.card_settings)
-            cardDetail.card_style = JSON.parse(cardDetail.card_style)
-            cardDetail.card_items = JSON.parse(cardDetail.card_items)
+            cardDetail.card_settings = isJSONString(cardDetail.card_settings) ? JSON.parse(cardDetail.card_settings) : cardDetail.card_settings
+            cardDetail.card_style = isJSONString(cardDetail.card_style) ? JSON.parse(cardDetail.card_style) : cardDetail.card_style
+            cardDetail.card_items = isJSONString(cardDetail.card_items) ? JSON.parse(cardDetail.card_items) : cardDetail.card_items
             return res.status(200).send({ message: res.__('BINGO_CARD_FOUND'), data: cardDetail });
         }
     } catch (e) {
@@ -186,15 +187,20 @@ const getCardDetailById: any = async (req: Request, res: Response) => {
 }
 const deleteCard: any = async (req: Request, res: Response) => {
     try {
-        const card_id = req.params.id
+        const card_id = req.params.id;
+        const externalDrivePath = global.config.ExternalFileUploadPath;
+        
         const cardDetail = await card.destroy({ where: { card_id: card_id } })
         if (!cardDetail) {
             return res.status(404).send({ status: 404, message: res.__('BINGO_CARD_NOT_FOUND') });
         } else {
+            const cardDirectoryPath = `${externalDrivePath}/card_images/${card_id}`;
+            if (fs.existsSync(cardDirectoryPath)) {
+                await fs.promises.rm(cardDirectoryPath, { recursive: true });
+            }
             return res.status(200).send({ message: res.__('BINGO_CARD_DELETE_SUCCESSFULLY') });
         }
     } catch (e) {
-        console.log(e);
         return res.status(400).send({ status: 400, message: res.__('SOMETHING_WENT_WRONG') });
     }
 }
@@ -204,6 +210,10 @@ const uploadFile: any = (req: Request, res: Response) => {
         return res.status(400).json({ status: 404, message: res.__('CARD_ID_REQUIRED') });
     }
     upload.array('card_image')(req, res, (error: any) => {
+        const files = req.files;
+        if (!files) {
+            return res.status(400).json({ status: 404, message: res.__('FILE_REQUIRED') });
+        }
         if (error) {
             console.log(error)
             return res.status(500).json({ status: 500, message: res.__('FILEUPLOAD_FAILED') });

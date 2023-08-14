@@ -8,7 +8,6 @@ export class card extends Model<cardAttributes>
     implements cardAttributes {
         card_id!: number
         user_id! : number 
-        card_logo! : String
         card_title! : String
         card_type! : String
         card_grid! : number
@@ -26,9 +25,6 @@ card.init({
     },
     user_id: {
         type: DataTypes.BIGINT
-    },
-    card_logo : {
-        type: DataTypes.STRING
     },
     card_title: {
         type: DataTypes.STRING
