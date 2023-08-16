@@ -26,11 +26,20 @@ const upsertCard: any = async (req: Request, res: Response) => {
                 cb(null, Date.now() + '-' + file.originalname); // File naming
             },
         });
-        const uploadMultiple = multer({ storage: storage }).fields([{ name: 'card_logo' }, { name: 'header_bg' }, { name: 'grid_bg' }, { name: 'card_bg' }, { name: 'free_space_img' }]);
+        const fileFiltervalidate =  (req: Request, file: Express.Multer.File, cb: any) => {
+            if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+                return cb(new Error('Please select only image files!'), false);
+            }
+            cb(null, true);
+        }
+        const uploadMultiple = multer({ storage: storage,fileFilter : fileFiltervalidate }).fields([{ name: 'card_logo' }, { name: 'header_bg' }, { name: 'grid_bg' }, { name: 'card_bg' }, { name: 'free_space_img' }]);
 
         uploadMultiple(req, res, async (err: any) => {
+            // if (err) {
+            //     return res.status(400).send(err);
+            // }
             if (err) {
-                return res.status(400).send(err);
+                return res.status(400).json({ status: 400,  message : err.message ? err.message  : res.__('FILEUPLOAD_FAILED')  });
             }
             //   if (!req.file) {
             //     console.log('No file uploaded!');
@@ -219,11 +228,10 @@ const uploadFile: any = async (req: Request, res: Response) => {
                 return res.status(400).json({ status: 404, message: res.__('FILE_REQUIRED') });
             }
             if (error) {
-                console.log(error)
-                return res.status(500).json({ status: 500, message: res.__('FILEUPLOAD_FAILED') });
+                return res.status(400).json({ status: 400,  message : error.message ? error.message  : res.__('FILEUPLOAD_FAILED')  });
             }
             else {
-                return res.status(500).json({ status: 200, message: res.__('FILEUPLOAD_SUCCESS') });
+                return res.status(200).json({ status: 200, message: res.__('FILEUPLOAD_SUCCESS') });
             }
         });
     }

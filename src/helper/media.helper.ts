@@ -26,6 +26,15 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ storage: storage });
+const upload = multer(
+    {
+        storage: storage,
+        fileFilter: (req: Request, file: Express.Multer.File, cb: any) => {
+            if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+                return cb(new Error('Please select only image files!'), false);
+            }
+            cb(null, true);
+        }
+    });
 
 export default upload;
