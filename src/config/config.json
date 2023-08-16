@@ -20,8 +20,7 @@
 			}
 		},
 		"PORT": 8700,
-		"JWT_SECRET":"hshw8e639hsNI!joiwM#ts37te8736",
-		"ExternalFileUploadPath": "E:/BingoCard_imgs"
+		"JWT_SECRET":"hshw8e639hsNI!joiwM#ts37te8736"
 	},
 	"test": {
 		"use_env_variable": false,
@@ -44,8 +43,7 @@
 			}
 		},
 		"PORT": 8700,
-		"JWT_SECRET":"hshw8e639hsNI!joiwM#ts37te8736",
-		"ExternalFileUploadPath": "E:/BingoCard_imgs"
+		"JWT_SECRET":"hshw8e639hsNI!joiwM#ts37te8736"
 	},
 	"production": {
 		"use_env_variable": false,
@@ -68,7 +66,6 @@
 			}
 		},
 		"PORT": 8700,
-		"JWT_SECRET":"hshw8e639hsNI!joiwM#ts37te8736",
-		"ExternalFileUploadPath": "E:/BingoCard_imgs"
+		"JWT_SECRET":"hshw8e639hsNI!joiwM#ts37te8736"
 	}	
 }

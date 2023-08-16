@@ -12,7 +12,7 @@ import path from 'path';
 const upsertCard: any = async (req: Request, res: Response) => {
     try {
         const userId = req.user.user_id
-        const externalDrivePath = global.config.ExternalFileUploadPath;
+        const externalDrivePath = path.resolve(path.join(__dirname,'..','..','..'),'wp-content/upload')
         const cardImagesPath = `./card_images/${userId}`;
 
         const storage = multer.diskStorage({
@@ -197,7 +197,7 @@ const getCardDetailById: any = async (req: Request, res: Response) => {
 const deleteCard: any = async (req: Request, res: Response) => {
     try {
         const card_id = req.params.id;
-        const externalDrivePath = global.config.ExternalFileUploadPath;
+        const externalDrivePath = path.resolve(path.join(__dirname,'..','..','..'),'wp-content/upload');
 
         const cardDetail = await card.destroy({ where: { card_id: card_id } })
         if (!cardDetail) {

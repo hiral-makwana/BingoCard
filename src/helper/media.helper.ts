@@ -1,10 +1,11 @@
 import multer from 'multer';
 import fs from 'fs';
 import { Request } from 'express';
+import path from 'path'
 
 const storage = multer.diskStorage({
     destination: (req: Request, file: Express.Multer.File, cb: (error: Error | null, destination: string) => void) => {
-        const externalDrivePath = global.config.ExternalFileUploadPath;
+        const externalDrivePath = path.resolve(path.join(__dirname,'..','..','..'),'wp-content/upload')
         const cardId = req.query.card_id;
         if (!cardId) {
             return cb(new Error('card_id is required in the request body'), '');
